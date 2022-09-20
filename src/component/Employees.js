@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setData, setError, selectError } from "../features/employeeSlice";
 
 const Employees = () => {
-  const URL = "http://dummy.restapiexample.com/api/v1/employees";
+  const URL = "https://dummy.restapiexample.com/api/v1/employees";
   const dispatch = useDispatch();
   const err = useSelector(selectError);
   const [isLoaded, setIsLoaded] = useState(false);

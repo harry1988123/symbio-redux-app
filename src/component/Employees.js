@@ -12,6 +12,7 @@ const Employees = () => {
 
   useEffect(() => {
     fetchData(URL);
+    // eslint-disable-next-line
   }, []);
 
   const fetchData = (url) => {

@@ -1,11 +1,14 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Employee from "./Employee";
+import { useSelector, useDispatch } from "react-redux";
+import { setData, setError, selectError } from "../features/employeeSlice";
 
 const Employees = () => {
-  const [empData, setEmpData] = useState(null);
-  const [err, setErr] = useState(null);
   const URL = "http://dummy.restapiexample.com/api/v1/employees";
+  const dispatch = useDispatch();
+  const err = useSelector(selectError);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     fetchData(URL);
@@ -15,16 +18,31 @@ const Employees = () => {
     axios
       .get(url)
       .then((res) => {
-        console.log(res);
-        setEmpData(res.data.data);
+        dispatch(setData(res.data.data));
+        dispatch(setError(null));
+        setIsLoaded(true);
       })
       .catch((err) => {
         console.log(err);
-        setErr(err.response.statusText + ". " + err.message);
+        dispatch(setError(err.response.statusText + ". " + err.message));
       });
   };
 
-  return <>{empData ? <Employee empData={empData} /> : <>{err}</>}</>;
+  return (
+    <>
+      {isLoaded ? (
+        <Employee />
+      ) : (
+        <>
+          {err}
+          <br />
+          <button onClick={() => window.location.reload(false)}>
+            Click here for Reload
+          </button>
+        </>
+      )}
+    </>
+  );
 };
 
 export default Employees;

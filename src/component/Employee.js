@@ -1,7 +1,10 @@
 import React from "react";
 import { Table, Spin } from "antd";
+import { useSelector } from "react-redux";
+import { selectData } from "../features/employeeSlice";
 
-const Employee = ({ empData }) => {
+const Employee = () => {
+  const empData = useSelector(selectData);
   const columns = [
     {
       title: "ID",
